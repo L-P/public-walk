@@ -1,0 +1,1 @@
+Utiliser autre chose que jQuery (Zepto?) plus léger pour du mobile
