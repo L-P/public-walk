@@ -16,50 +16,66 @@ $(function main() {
 
 		// Display cameras on the map
 		map.displayCamerasAroundUser(user);
-		
-		
 
-		function initGeoloc() {
-			// Try HTML5 geolocation
-			if(navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(function(position) {
-					var pos = new google.maps.LatLng(position.coords.latitude,
-						position.coords.longitude);
 
-					var infowindow = new google.maps.InfoWindow({
-						map: mainMap,
-						position: pos,
-						content: 'Location found using HTML5.'
-					});
+/*
+window.HD = {};
 
-					mainMap.setCenter(pos);
-				}, function() {
-					handleNoGeolocation(true);
+$(function main() {
+		// Default position
+		window.HD.pos = new google.maps.LatLng(
+			48.85,
+			2.34
+		);
+
+		// Display main map
+		var mainMapOptions = {
+				zoom: 14,
+				center: window.HD.pos,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		var mainMap = new google.maps.Map(document.getElementById("map_canvas"), mainMapOptions);
+
+		// Add a new marker on the map
+		function addCamera(lat, lng, name) {
+			var marker = new google.maps.Marker({
+				position:new google.maps.LatLng(lat, lng),
+				map: mainMap, 
+				title:name,
+			}); 
+			marker.seticon("data:image/png;base64,");
+			var circle = new google.maps.Circle({
+				map: mainMap,
+				radius: 50,
+				fillColor: '#AA0000'
+			});
+			circle.bindTo('center', marker, 'position');
+			return marker;
+		}
+
+		HD.geo.initGeoloc(mainMap);
+		mainMap.setCenter(HD.pos);
+		mainMap.setZoom(16);
+		var userMarker = new google.maps.Marker({
+			position:window.HD.pos,
+			map: mainMap,
+			title:"Your position"
+		});
+
+		// Get the cameras around us, and display them on the map
+		$.ajax({
+			url : 'get_cctv.php',
+			data : {
+				lat:window.HD.pos.lat(),
+				lng:window.HD.pos.lng()
+			},
+			success: function(data) {
+				// Add each cam on the map
+				_.each(data, function eachCamera(camera) {
+					addCamera(camera.lat, camera.lng, camera.name)
 				});
-			} else {
-				// Browser doesn't support Geolocation
-				handleNoGeolocation(false);
 			}
-		}
-
-
-		function handleNoGeolocation(errorFlag) {
-			if (errorFlag) {
-				var content = 'Error: The Geolocation service failed.';
-			} else {
-				var content = 'Error: Your browser doesn\'t support geolocation.';
-
-				var options = {
-					map: mainMap,
-					position: userPos,
-					content: content
-				};
-
-				var infowindow = new google.maps.InfoWindow(options);
-				mainMap.setCenter(options.position);
-			}
-		}
-
-		//initGeoloc();
-
+		});
+>>>>>>> 633d5c4500ae41c6a2b194375342837f2ae8adf4
 });
+*/

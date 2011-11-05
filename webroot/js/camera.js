@@ -32,6 +32,8 @@ HD.CameraView = Backbone.View.extend({
 			map: App.map.getGMap(), 
 			title: this.model.get('name')
 		});
+		// Removing the default icon
+		marker.seticon("data:image/png;base64,");
 		// And add the radius
 		this.displayRadius();
 	},

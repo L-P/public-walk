@@ -4,8 +4,8 @@
  **/
 HD.User = Backbone.Model.extend({
 	defaults: {
-		lat: 48.85790014566900000,
-		lng: 2.34716868082870000,
+		lat: 48.85,
+		lng: 2.34,
 		perceptionRadius: 0.005
 	},
 	initialize: function initialize() {
