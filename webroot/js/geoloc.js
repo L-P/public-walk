@@ -16,6 +16,14 @@ HD.geo = (function() {
 			}, function() {
 				handleNoGeolocation(true, map);
 			});
+		} else if (google.gears) { // Try Google Gears Geolocation
+			var geo = google.gears.factory.create('beta.geolocation');
+			geo.getCurrentPosition(function(position) {
+				initialLocation = new google.maps.LatLng(position.latitude,position.longitude);
+				map.setCenter(initialLocation);
+			}, function() {
+				handleNoGeoLocation(true, map);
+			});
 		} else {
 			// Browser doesn't support Geolocation
 			handleNoGeolocation(false, map);
