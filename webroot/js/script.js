@@ -1,34 +1,23 @@
+// We pollute the global scope with this single var, that will hold all our Model and View constructors
+window.HD = {}
+// easiest log
+window.log = (function() {
+	return console.log || function() { }
+})()
+
+// Now, we will call the main script, to be loaded once the page is fully loaded
 $(function main() {
-		// Default position
-		var userPos = {
-			lat: 48.85790014566900000,
-			lng: 2.34716868082870000
-		}
+		// Instanciate our Models
+		var App = window.App = new HD.App();
+		var user = App.user = new HD.User();
+		var map = App.map = new HD.Map({
+			center: user.getLatLng()
+		});
 
-		// Display main map
-		var mainMapOptions = {
-				zoom: 14,
-				center: new google.maps.LatLng(userPos.lat, userPos.lng),
-				mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
-		var mainMap = new google.maps.Map(document.getElementById("map_canvas"), mainMapOptions);
-
-		// Add a new marker on the map
-		function addCamera(lat, lng, name) {
-			var marker = new google.maps.Marker({
-				position:new google.maps.LatLng(lat, lng),
-				map: mainMap, 
-				title:name,
-				setIcon:"img/eye.png"
-			}); 
-			var circle = new google.maps.Circle({
-				map: mainMap,
-				radius: 50,
-				fillColor: '#AA0000'
-				});
-			circle.bindTo('center', marker, 'position');
-			return marker;
-		}
+		// Display cameras on the map
+		map.displayCamerasAroundUser(user);
+		
+		
 
 		function initGeoloc() {
 			// Try HTML5 geolocation
@@ -71,21 +60,6 @@ $(function main() {
 			}
 		}
 
-		initGeoloc();
+		//initGeoloc();
 
-		// Get the cameras around us, and display them on the map
-		$.ajax({
-			url : 'get_cctv.php',
-			data : {
-				lat: userPos.lat,
-				lng: userPos.lng,
-				radius: 0.005
-			},
-			success: function(data) {
-				// Add each cam on the map
-				_.each(data, function eachCamera(camera) {
-					addCamera(camera.lat, camera.lng, camera.name)
-				});
-			}
-		});
 });
