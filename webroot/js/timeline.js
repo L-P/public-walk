@@ -8,9 +8,32 @@ HD.Timeline = Backbone.Model.extend({
 
 
 	geolocReceived: function geolocReceived(data) {
-		log("Geoloc data received :", data);
-		log(App.map.get('cameras'));
-		var distance = 0;
+		function getDistance(cam) {
+			var radius = 0.001;
+			var x = Math.abs(cam.lat - data.lat);
+			var y = Math.abs(cam.lng - data.lng);
+
+			if(x >= radius || y >= radius)
+				return null;
+
+			var pos = cam.getLatLng();
+			return getDistanceInMetersFromCoordinates(pos.lat(), pos.lng(), data.lat, data.lng);
+		}
+
+		cameras = App.map.get('cameras');
+		var walkedDist = 1;
+
+		var atLeastOneCam = true;
+		_.each(cameras, function(v, k) {
+			var distance = getDistance(v);
+			if(distance && (distance <= 50)) {
+				this.pushStack(new Date().getTime(), atLeastOneCam ? walkedDist : 0, v.id);
+				atLeastOneCam = false;
+			}
+		}, this);
+
+		if(!atLeastOneCam)
+			this.pushStack(new Date().getTime(), walkedDist, null);
 	},
 
 
@@ -23,7 +46,11 @@ HD.Timeline = Backbone.Model.extend({
 	},
 
 	clearStack: function clearStack() {
-		this.stack = {0:{time:0,dist:0,id:null}};
+		this.stack = {0:{
+			time:new Date().getTime(),
+			dist:0,
+			id:null
+		}};
 	},
 
 	createDummyStack: function createDummyStack() {
@@ -34,11 +61,14 @@ HD.Timeline = Backbone.Model.extend({
 
 	getTime: function getTime() {
 		var max = 0;
+		var min = Infinity;
 		_.each(this.stack, function(v, k) {
 			max = Math.max(max, v.time);
+			min = Math.min(min, v.time);
 		});
 
-		return max;
+		log(max-min);
+		return (max - min) / 1000;
 	},
 	
 	getDistance : function getDistance() {
@@ -69,7 +99,7 @@ HD.Timeline = Backbone.Model.extend({
 			lastTime = v.time;
 		});
 
-		return time;
+		return time / 1000;
 	},
 
 	getPrivateDistance: function getPrivateDistance() {
