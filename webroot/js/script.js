@@ -7,7 +7,7 @@ $(function main() {
 
 		// Display main map
 		var mainMapOptions = {
-				zoom: 4,
+				zoom: 13,
 				center: new google.maps.LatLng(userPos.lat, userPos.lng),
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
