@@ -32,7 +32,7 @@ HD.Timeline = Backbone.Model.extend({
 		}, this);
 
 		if(!atLeastOneCam)
-			this.pushStack(new Date().getTime(), walkedDist, null);
+			this.pushStack(new Date().getTime(), App.user.get('distance'), null);
 	},
 
 
