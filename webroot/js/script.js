@@ -22,7 +22,6 @@ $(function main() {
 				map: mainMap, 
 				title:name,
 			}); 
-			marker.setIcon("img/eye.png");
 			var circle = new google.maps.Circle({
 				map: mainMap,
 				radius: 50,
