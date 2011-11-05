@@ -10,25 +10,26 @@ HD.Timeline = Backbone.Model.extend({
 	geolocReceived: function geolocReceived(data) {
 		function getDistance(cam) {
 			var radius = 0.001;
-			var x = Math.abs(cam.lat - data.lat);
-			var y = Math.abs(cam.lng - data.lng);
+			var pos = cam.getLatLng();
+			var x = Math.abs(pos.lat() - data.lat);
+			var y = Math.abs(pos.lng() - data.lng);
 
 			if(x >= radius || y >= radius)
 				return null;
 
-			var pos = cam.getLatLng();
 			return getDistanceInMetersFromCoordinates(pos.lat(), pos.lng(), data.lat, data.lng);
 		}
 
-		cameras = App.map.get('cameras');
 		var walkedDist = 1;
+		var cameras = App.map.get('cameras');
+		var atLeastOneCam = false;
 
-		var atLeastOneCam = true;
 		_.each(cameras, function(v, k) {
 			var distance = getDistance(v);
+			if(distance) log(distance);
 			if(distance && (distance <= 50)) {
-				this.pushStack(new Date().getTime(), atLeastOneCam ? walkedDist : 0, v.id);
-				atLeastOneCam = false;
+				this.pushStack(new Date().getTime(), atLeastOneCam ? 0 : walkedDist, v.id);
+				atLeastOneCam = true;
 			}
 		}, this);
 
