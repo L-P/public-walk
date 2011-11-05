@@ -2,15 +2,15 @@ window.HD = {};
 
 $(function main() {
 		// Default position
-		var userPos = {
-			lat: 48.85790014566900000,
-			lng: 2.34716868082870000
-		}
+		var userPos = new google.maps.LatLng(
+			48.85790014566900000,
+			2.34716868082870000
+		);
 
 		// Display main map
 		var mainMapOptions = {
 				zoom: 14,
-				center: new google.maps.LatLng(userPos.lat, userPos.lng),
+				center: userPos,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 		var mainMap = new google.maps.Map(document.getElementById("map_canvas"), mainMapOptions);
@@ -44,7 +44,10 @@ $(function main() {
 		// Get the cameras around us, and display them on the map
 		$.ajax({
 			url : 'get_cctv.php',
-			data : userPos,
+			data : {
+				lat:userPos.lat(),
+				lng:userPos.lng()
+			},
 			success: function(data) {
 				// Add each cam on the map
 				_.each(data, function eachCamera(camera) {
