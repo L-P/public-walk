@@ -2,6 +2,7 @@
 window.HD = {}
 // easiest log
 window.log = (function() {
+	return console.log;
 	return function() {}
 })()
 

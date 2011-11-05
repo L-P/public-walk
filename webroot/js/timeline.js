@@ -2,10 +2,18 @@ HD.Timeline = Backbone.Model.extend({
 	defaults: {
 	},
 	initialize: function initialize(options) {
-		this.stack = [];
-		this.createDummyStack();
+		this.clearStack();
+		App.bind('geolocReceived', this.geolocReceived, this);
 	},
-	
+
+
+	geolocReceived: function geolocReceived(data) {
+		log("Geoloc data received :", data);
+		log(App.map.get('cameras'));
+		var distance = 0;
+	},
+
+
 	pushStack : function pushStack(time, dist, id) {
 		this.stack[time] = {
 			time: time,
@@ -15,7 +23,7 @@ HD.Timeline = Backbone.Model.extend({
 	},
 
 	clearStack: function clearStack() {
-		this.stack = [];
+		this.stack = {0:{time:0,dist:0,id:null}};
 	},
 
 	createDummyStack: function createDummyStack() {
