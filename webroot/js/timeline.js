@@ -3,11 +3,11 @@ HD.Timeline = Backbone.Model.extend({
 	},
 	initialize: function initialize(options) {
 		this.clearStack();
-		App.bind('geolocReceived', this.geolocReceived, this);
+		App.bind('updateStack', this.updateStack, this);
 	},
 
 
-	geolocReceived: function geolocReceived(data) {
+	updateStack: function updateStack(data) {
 		function getDistance(cam) {
 			var radius = 0.001;
 			var pos = cam.getLatLng();

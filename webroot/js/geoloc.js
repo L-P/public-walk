@@ -10,6 +10,13 @@ HD.Geoloc = Backbone.Model.extend({
 		if (navigator.geolocation) this.initHTML5();
 		else if (google.gears) this.initGoogleGears();
 		else this.handleNoGeolocation();
+
+		setInterval(function() {
+			App.trigger('updateStack', {
+				lat: App.user.get('lat'),
+				lng: App.user.get('lng'),
+			});
+		}, 5000);
 	},
 
 	// Start HTML5 geoloc
@@ -43,13 +50,6 @@ HD.Geoloc = Backbone.Model.extend({
 	// Called when Geoloc is not possible
 	handleNoGeolocation: function handleNoGeolocation() {
 		alert('No Geolocation');
-
-		setInterval(function() {
-			App.trigger('geolocReceived', {
-				lat: 48.85,
-				lng: 2.34,
-			});
-		}, 2000);
 	}
 });
 
