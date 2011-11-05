@@ -44,8 +44,7 @@ HD.geo = (function() {
 	}
 
 	return {
-		'initGeoloc': initGeoloc,
-		'pos':null
+		'initGeoloc': initGeoloc
 	};
 })();
 
