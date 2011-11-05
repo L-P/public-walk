@@ -9,7 +9,40 @@ body {
     background-image:url('../img/bg.png');
     font-family:'PT Sans',Arial,sans-serif;
     font-size:15px;
-    }
+}
+
+.landingPage {
+	width:600px;
+	margin:30px auto;
+}
+.landingPage form {
+}
+.landingPage .fields {
+	overflow:hidden;
+}
+.landingPage .field {
+	float:left;
+	width:300px;
+}
+.landingPage label {
+	display:block;
+	font-weight:bold;
+	height:30px;
+	line-height:30px;
+	padding-left:10px;
+}
+.landingPage input {
+	margin:0px 10px 10px 10px;
+	height:2.8em;
+	width:280px;
+}
+.landingPage button {
+	display: block;
+	font-size: 2em;
+	height: 2em;
+	margin: 10px auto;
+	width: 150px;
+}
 
 #canvas {
     width:100%;
@@ -19,7 +52,12 @@ body {
     right:0px;
     bottom:70px;
     display:none;
-    }
+}
+
+
+
+
+
 
 #startButton {
     text-align:center;

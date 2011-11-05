@@ -5,11 +5,20 @@
 		<title>public walk()</title>
 		<link rel="shortcut icon" type="image/png" href="img/eye.png" />
 		<meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+		<link href="css/formalize.css" media="screen" rel="stylesheet" type="text/css" />
 		<link href="css/style.css" media="screen" rel="stylesheet" type="text/css" />
 	</head>
 	
 	<body>
-	   <a id="startButton" href="#" onclick="initAllTheThings();">Start!</a>
+		<div class="landingPage">
+			<form action="#" method="POST">
+				<div class="fields">
+					<div class="field"><label for="from">From :</label><input type="text" id="from" name="from" /></div>
+					<div class="field"><label for="to">To :</label><input type="text" id="to" name="to" /></div>
+				</div>
+				<button class="submit" type="submit">Start</button>
+			</form>
+		</div>
 		<div id="canvas"></div>
 		<div id="infoPanel">
             <table>
