@@ -2,7 +2,7 @@ window.HD = {};
 
 $(function main() {
 		// Default position
-		HD.pos = new google.maps.LatLng(
+		window.HD.pos = new google.maps.LatLng(
 			48.85,
 			2.34
 		);
@@ -10,7 +10,7 @@ $(function main() {
 		// Display main map
 		var mainMapOptions = {
 				zoom: 14,
-				center: HD.pos,
+				center: window.HD.pos,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 		var mainMap = new google.maps.Map(document.getElementById("map_canvas"), mainMapOptions);
@@ -35,7 +35,7 @@ $(function main() {
 		HD.geo.initGeoloc(mainMap);
 		mainMap.setZoom(16);
 		var userMarker = new google.maps.Marker({
-			position:HD.pos,
+			position:window.HD.pos,
 			map: mainMap,
 			title:"Your position"
 		});
@@ -44,8 +44,8 @@ $(function main() {
 		$.ajax({
 			url : 'get_cctv.php',
 			data : {
-				lat:HD.pos.lat(),
-				lng:HD.pos.lng()
+				lat:window.HD.pos.lat(),
+				lng:window.HD.pos.lng()
 			},
 			success: function(data) {
 				// Add each cam on the map
