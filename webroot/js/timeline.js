@@ -9,9 +9,14 @@ HD.timeline = (function() {
 		};
 	}
 
+
+	function clearStack() {
+		stack = [];
+	}
+
 	function createDummyStack() {
 		for(i=0; i<500; i++) {
-			pushStack(i, Math.random()*10, (Math.random() > .5) ? Math.floor(Math.random()*100) : null);
+			pushStack(i, Math.random()*10, (Math.random() > .8) ? Math.floor(Math.random()*100) : null);
 		}
 	}
 
@@ -44,22 +49,56 @@ HD.timeline = (function() {
 		}, 0);
 	}
 
+	function getPrivateTime() {
+		var time = 0;
+		var lastTime = stack[0].time;
+		_.each(stack, function(v, k) {
+			if(!v.id)
+				time += v.time - lastTime;
+			lastTime = v.time;
+		});
+
+		return time;
+	}
+
+	function getPrivateDistance() {
+		return _.reduce(stack, function(memo, v) {
+			return memo + (v.id ? 0 : v.dist);
+		}, 0);
+	}
+
+	function getPublicTime() {
+		return getTime() - getPrivateTime();
+	}
+
+	function getPublicDistance() {
+		return getDistance() - getPrivateDistance();
+		return NaN;
+	}
+
+
+
 	createDummyStack();
-	console.log(getTime());
-	console.log(getDistance());
-	console.log(getCamCount());
+	console.log({
+		'getTime' :				getTime(),
+		'getDistance' :			getDistance(),
+		'getCamCount' :			getCamCount(),
+		'getPrivateTime' :		getPrivateTime(),
+		'getPrivateDistance' :	getPrivateDistance(),
+		'getPublicTime' :		getPublicTime(),
+		'getPublicDistance' :	getPublicDistance(),
+	});
+	clearStack();
 
 	return {
-		'pushStack'			:			pushStack,
-		'getTime'			:			getTime,
-		'getDistance'		:			getDistance,
-		'getCamCount'		:			getCamCount,
-/*
+		'pushStack' :			pushStack,
+		'getTime' :				getTime,
+		'getDistance' :			getDistance,
+		'getCamCount' :			getCamCount,
 		'getPrivateTime' :		getPrivateTime,
 		'getPrivateDistance' :	getPrivateDistance,
 		'getPublicTime' :		getPublicTime,
 		'getPublicDistance' :	getPublicDistance,
-*/
 	};
 })();
 
