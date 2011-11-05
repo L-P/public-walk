@@ -47,7 +47,8 @@ body {
     bottom:0px;
     margin:0px auto;
     box-shadow: 0 0 3px #000000;
-    padding:10px;
+    padding:0px;
+    font-style:none;
     }
 
 #infoPanel ul {
@@ -60,15 +61,15 @@ body {
     margin:3px;
     }
 
-#infoPanel div {
+#infoPanel div,footer {
     float:left;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px; 
     border:1px solid gray;
     padding:6px;
-    margin:3px;
-    width:200px;
+    margin:2px;
+    width:32%;
 }
 
 #infoPanel em {
@@ -94,7 +95,8 @@ body {
     background-color: #F2D4CE;
     }
 
-#infoPanel #footer {
+#infoPanel footer {
     border-color: #E6C26E;
     background-color: #FAF6D4;
+    padding:2px;
     }
