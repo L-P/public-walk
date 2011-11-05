@@ -1,6 +1,6 @@
 window.HD = {};
 
-$(function main() {
+function main() {
 		// Default position
 		window.HD.pos = new google.maps.LatLng(
 			48.85,
@@ -55,4 +55,4 @@ $(function main() {
 				});
 			}
 		});
-});
+};
