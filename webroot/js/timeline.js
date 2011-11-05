@@ -20,15 +20,13 @@ HD.Timeline = Backbone.Model.extend({
 			return getDistanceInMetersFromCoordinates(pos.lat(), pos.lng(), data.lat, data.lng);
 		}
 
-		var walkedDist = 1;
 		var cameras = App.map.get('cameras');
 		var atLeastOneCam = false;
 
 		_.each(cameras, function(v, k) {
 			var distance = getDistance(v);
-			if(distance) log(distance);
 			if(distance && (distance <= 50)) {
-				this.pushStack(new Date().getTime(), atLeastOneCam ? 0 : walkedDist, v.id);
+				this.pushStack(new Date().getTime(), atLeastOneCam ? 0 : App.user.get('distance'), v.id);
 				atLeastOneCam = true;
 			}
 		}, this);

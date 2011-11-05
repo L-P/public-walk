@@ -7,7 +7,10 @@ HD.User = Backbone.Model.extend({
 		lat: 48.85,
 		lng: 2.34,
 		isCoordsChanged: false,
-		perceptionRadius: 0.005
+		perceptionRadius: 0.005,
+		lastLat: 48.85,
+		lastLng: 2.34,
+		distance: 0
 	},
 	initialize: function initialize() {
 		// We init the geoloc service
@@ -23,8 +26,18 @@ HD.User = Backbone.Model.extend({
 	// Move the user to a new point.
 	moveTo: function moveTo(lat, lng) {
 		// delete the old LatLng
+		this.set({
+			lastLat : this.get('lat'),
+			lastLng : this.get('lng')
+		});
 		delete this.LatLng;
 		this.set({lat:lat,lng:lng});
+		this.set({distance: getDistanceInMetersFromCoordinates(
+			this.get('lat'),
+			this.get('lng'),
+			this.get('lastLat'),
+			this.get('lastLng')
+		)});
 		// Ugly, but works
 		this.view.render();
 
