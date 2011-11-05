@@ -11,7 +11,7 @@ HD.timeline = (function() {
 
 	function createDummyStack() {
 		for(i=0; i<500; i++) {
-			pushStack(i, Math.random()*10, Math.floor(Math.random()*100));
+			pushStack(i, Math.random()*10, (Math.random() > .5) ? Math.floor(Math.random()*100) : null);
 		}
 	}
 
@@ -31,14 +31,29 @@ HD.timeline = (function() {
 		}, 0);
 	}
 
+
+	function getCamCount() {
+		var seen = {};
+		_.each(stack, function(v, k) {
+			if(v.id)
+				seen[v.id] = true;
+		});
+
+		return _.reduce(seen, function(memo, v) {
+			return memo+1;
+		}, 0);
+	}
+
 	createDummyStack();
 	console.log(getTime());
 	console.log(getDistance());
+	console.log(getCamCount());
 
 	return {
 		'pushStack'			:			pushStack,
 		'getTime'			:			getTime,
 		'getDistance'		:			getDistance,
+		'getCamCount'		:			getCamCount,
 /*
 		'getPrivateTime' :		getPrivateTime,
 		'getPrivateDistance' :	getPrivateDistance,
