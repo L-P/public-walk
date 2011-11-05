@@ -33,7 +33,7 @@ HD.CameraView = Backbone.View.extend({
 			title: this.model.get('name')
 		});
 		// Removing the default icon
-		this.marker.setIcon("data:image/png;base64,");
+		this.marker.setIcon("data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw%3D%3D");
 		// And add the radius
 		this.displayRadius();
 	},
