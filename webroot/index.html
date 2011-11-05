@@ -2,14 +2,41 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>HackDay Petite Salle's Project</title>
+		<title>public walk()</title>
 		<link rel="shortcut icon" type="image/png" href="img/eye.png" />
 		<meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
 		<link href="css/style.css" media="screen" rel="stylesheet" type="text/css" />
 	</head>
 	
 	<body>
-		<div id="canvas" style="width:100%; height:100%"></div>
+	   <a id="startButton" href="#" onclick="initAllTheThings();">Start!</a>
+		<div id="canvas"></div>
+		<div id="infoPanel">
+		    <div id="head">Informations:</div>
+            <div id="publicInfo">
+                <em>Total</em>
+                <ul>
+                <li><em>Time:</em> <span id="totalTime">0</span></li>
+                <li><em>Distance:</em> <span id="totalDistance">0</span></li>
+            </ul>
+            <div id="privateInfo">
+                <em>Private</em>
+                <ul>
+                    <li><em>Time:</em> <span id="privateTime">0</span></li>
+                    <li><em>Distance:</em> <span id="privateDistance">0</span></li>
+                </ul>
+            </div>
+            <div id="publicInfo">
+                <em>Public</em>
+                <ul>
+                    <li><em>Time:</em> <span id="publicTime">0</span></li>
+                    <li><em>Distance:</em> <span id="publicDistance">0</span></li>
+                </ul>
+            </div>
+            <div id="footer">
+                <p>Seen by <span id="cameraCount">0</span> public camera(s)</p>
+            </div>
+		</div>
 	</body>
 	
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
@@ -22,4 +49,6 @@
 	<script type="text/javascript" src="js/map.js"></script>
 	<script type="text/javascript" src="js/camera.js"></script>
 	<script type="text/javascript" src="js/geoloc.js"></script>
+	<script type="text/javascript" src="js/timeline.js"></script>
+	<script type="text/javascript" src="js/ui.js"></script>
 </html>
