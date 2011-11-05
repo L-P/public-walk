@@ -4,7 +4,7 @@ HD.geo = (function() {
 			navigator.geolocation.getCurrentPosition(function(position) {
 				var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 				map.setCenter(pos);
-				HD.pos = pos;
+				window.HD.pos = pos;
 			}, function() {
 				handleNoGeolocation(true, map);
 			});
@@ -13,7 +13,7 @@ HD.geo = (function() {
 			geo.getCurrentPosition(function(position) {
 				var pos = new google.maps.LatLng(position.latitude,position.longitude);
 				map.setCenter(pos);
-				HD.pos = pos;
+				window.HD.pos = pos;
 			}, function() {
 				handleNoGeoLocation(true, map);
 			});
@@ -21,8 +21,8 @@ HD.geo = (function() {
 			handleNoGeolocation(false, map);
 		}
 
-		if(!HD.pos)
-			HD.pos = map.getCenter();
+		if(!window.HD.pos)
+			window.HD.pos = map.getCenter();
 	}
 
 
