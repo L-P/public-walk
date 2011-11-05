@@ -2,7 +2,6 @@
 window.HD = {}
 // easiest log
 window.log = (function() {
-	if (window.console && window.console.log) return window.console.log;
 	return function() {}
 })()
 
