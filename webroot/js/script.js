@@ -53,20 +53,18 @@ $(function main() {
 			} else {
 				var content = 'Error: Your browser doesn\'t support geolocation.';
 
+				var options = {
+					map: mainMap,
+					position: userPos,
+					content: content
+				};
 
-			var options = {
-				map: mainMap,
-				position: userPos,
-				content: content
-			};
-
-			var infowindow = new google.maps.InfoWindow(options);
-			mainMap.setCenter(options.position);
+				var infowindow = new google.maps.InfoWindow(options);
+				mainMap.setCenter(options.position);
+			}
 		}
 
 		initGeoloc();
-		userPos = mainMap.getCenter();
-		
 
 		$.ajax({
 			url : 'get_cctv.php',
