@@ -21,6 +21,13 @@ $(function main() {
 				map: mainMap, 
 				title:name
 			}); 
+			var circle = new google.maps.Circle({
+				map: mainMap,
+				radius: 50,
+				fillColor: '#AA0000'
+				});
+			circle.bindTo('center', marker, 'position');
+			return marker;
 		}
 
 		function initGeoloc() {
