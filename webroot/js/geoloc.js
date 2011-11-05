@@ -29,7 +29,7 @@ HD.geo = (function() {
 
 			var options = {
 				map: map,
-				position: userPos,
+				position: map.getCenter(),
 				content: content
 			};
 
