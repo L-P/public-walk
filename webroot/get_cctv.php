@@ -1,5 +1,4 @@
 <?php
-
 require_once 'base.inc.php';
 
 $lat	= Utils::getGet('lat');

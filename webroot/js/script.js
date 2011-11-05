@@ -7,11 +7,12 @@ $(function main() {
 
 		// Display main map
 		var mainMapOptions = {
-				zoom: 13,
+				zoom: 18,
 				center: new google.maps.LatLng(userPos.lat, userPos.lng),
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 		var mainMap = new google.maps.Map(document.getElementById("map_canvas"), mainMapOptions);
+		console.log(google.maps);
 
 		// Add a new marker on the map
 		function addCamera(lat, lng, name) {
@@ -22,11 +23,15 @@ $(function main() {
 			}); 
 		}
 
+		// Get the cametas around us, and display them on the map
 		$.ajax({
 			url : 'get_cctv.php',
 			data : userPos,
 			success: function(data) {
-				console.log(data);
+				// Add each cam on the map
+				_.each(data, function eachCamera(camera) {
+					addCamera(camera.lat, camera.lng, camera.name)
+				});
 			}
 		});
 });
