@@ -16,7 +16,7 @@ $(function main() {
 
 		// Add a new marker on the map
 		function addCamera(lat, lng, name) {
-			return new google.maps.Marker({
+			var marker = new google.maps.Marker({
 				position:new google.maps.LatLng(lat, lng),
 				map: mainMap, 
 				title:name
