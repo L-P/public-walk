@@ -1,8 +1,8 @@
 HD.geo = (function() {
-	function initGeoloc(map) { // Try HTML5 geolocation
+	function initGeoloc(map, pos) { // Try HTML5 geolocation
 		if(navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function(position) {
-				var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+				pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 				map.setCenter(pos);
 			}, function() {
 				handleNoGeolocation(true, map);
@@ -10,8 +10,8 @@ HD.geo = (function() {
 		} else if (google.gears) { // Try Google Gears Geolocation
 			var geo = google.gears.factory.create('beta.geolocation');
 			geo.getCurrentPosition(function(position) {
-				initialLocation = new google.maps.LatLng(position.latitude,position.longitude);
-				map.setCenter(initialLocation);
+				pos = new google.maps.LatLng(position.latitude,position.longitude);
+				map.setCenter(pos);
 			}, function() {
 				handleNoGeoLocation(true, map);
 			});
@@ -31,7 +31,7 @@ HD.geo = (function() {
 
 		var options = {
 			map: map,
-			position: map.getCenter(),
+			position: pos,
 			content: content
 		};
 

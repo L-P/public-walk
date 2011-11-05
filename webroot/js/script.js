@@ -3,8 +3,8 @@ window.HD = {};
 $(function main() {
 		// Default position
 		var userPos = new google.maps.LatLng(
-			48.85790014566900000,
-			2.34716868082870000
+			48.85,
+			2.34
 		);
 
 		// Display main map
@@ -32,8 +32,7 @@ $(function main() {
 			return marker;
 		}
 
-		HD.geo.initGeoloc(mainMap);
-		userPos = mainMap.getCenter();
+		HD.geo.initGeoloc(mainMap, userPos);
 		mainMap.setZoom(16);
 		var userMarker = new google.maps.Marker({
 			position:userPos,
