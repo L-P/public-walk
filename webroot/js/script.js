@@ -33,9 +33,10 @@ $(function main() {
 		}
 
 		HD.geo.initGeoloc(mainMap);
+		userPos = mainMap.getCenter();
 		mainMap.setZoom(16);
 		var userMarker = new google.maps.Marker({
-			position:mainMap.getCenter(),
+			position:userPos,
 			map: mainMap,
 			title:"Your position"
 		});
