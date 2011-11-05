@@ -16,7 +16,6 @@ HD.Geoloc = Backbone.Model.extend({
 	// Start HTML5 geoloc
 	initHTML5: function initHTML5() {
 		navigator.geolocation.getCurrentPosition(function geolocHTMLOk(position) {
-			log("HTML5 Geoloc ok");
 			App.trigger('geolocReceived', {
 				lat: position.coords.latitude,
 				lng: position.coords.longitude
@@ -28,7 +27,6 @@ HD.Geoloc = Backbone.Model.extend({
 	initGoogleGears: function initGoogleGears() {
 		var geo = google.gears.factory.create('beta.geolocation');
 		geo.getCurrentPosition(function geolocGoogleGearsOk(position) {
-			log("Google Gears Geoloc ok");
 			App.trigger('geolocReceived', {
 				lat: position.latitude,
 				lng: position.longitude

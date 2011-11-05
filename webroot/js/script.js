@@ -1,10 +1,7 @@
 // We pollute the global scope with this single var, that will hold all our Model and View constructors
 window.HD = {}
 // easiest log
-window.log = (function() {
-	if (window.console && window.console.log) return window.console.log;
-	return function() {}
-})()
+window.log=function(){log.history=log.history||[];log.history.push(arguments);if(this.console){console.log(Array.prototype.slice.call(arguments))}};
 
 // Now, we will call the main script, to be loaded once the page is fully loaded
 function main() {
@@ -18,5 +15,6 @@ function main() {
 		// Display cameras on the map
 		map.displayCamerasAroundUser(user);
 
+		// Starting the timeline
 		var timeline = App.timeline = new HD.Timeline();
 }
