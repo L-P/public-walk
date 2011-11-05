@@ -7,19 +7,19 @@ $(function main() {
 
 		// Display main map
 		var mainMapOptions = {
-				zoom: 18,
+				zoom: 14,
 				center: new google.maps.LatLng(userPos.lat, userPos.lng),
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 		var mainMap = new google.maps.Map(document.getElementById("map_canvas"), mainMapOptions);
-		console.log(google.maps);
 
 		// Add a new marker on the map
 		function addCamera(lat, lng, name) {
 			var marker = new google.maps.Marker({
 				position:new google.maps.LatLng(lat, lng),
 				map: mainMap, 
-				title:name
+				title:name,
+				setIcon:"img/eye.png"
 			}); 
 			var circle = new google.maps.Circle({
 				map: mainMap,
