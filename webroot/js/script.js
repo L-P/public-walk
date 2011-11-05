@@ -6,7 +6,7 @@ window.log = (function() {
 })()
 
 // Now, we will call the main script, to be loaded once the page is fully loaded
-$(function main() {
+function main() {
 		// Instanciate our Models
 		var App = window.App = new HD.App();
 		var user = App.user = new HD.User();
@@ -16,4 +16,6 @@ $(function main() {
 
 		// Display cameras on the map
 		map.displayCamerasAroundUser(user);
-});
+
+		var timeline = App.timeline = new HD.Timeline();
+}

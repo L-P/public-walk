@@ -1,19 +1,19 @@
 function initAllTheThings () {
     $('#startButton').hide();
-    $('#map_canvas').show();
+    $('#canvas').show();
     $('#infoPanel').show();
     main();
     infoFetchingLoop();
 }
 
 function displayInfoInPanel() {
-    $('#totalTime').text(HD.timeline.getTime());
-    $('#totalDistance').text(HD.timeline.getDistance());
-    $('#privateTime').text(HD.timeline.getPrivateTime());
-    $('#privateDistance').text(HD.timeline.getPrivateDistance());
-    $('#publicTime').text(HD.timeline.getPublicTime());
-    $('#publicDistance').text(HD.timeline.getPublicDistance());
-    $('#cameraCount').text(HD.timeline.getCamCount());
+    $('#totalTime').text(App.timeline.getTime());
+    $('#totalDistance').text(App.timeline.getDistance());
+    $('#privateTime').text(App.timeline.getPrivateTime());
+    $('#privateDistance').text(App.timeline.getPrivateDistance());
+    $('#publicTime').text(App.timeline.getPublicTime());
+    $('#publicDistance').text(App.timeline.getPublicDistance());
+    $('#cameraCount').text(App.timeline.getCamCount());
 }
 
 function infoFetchingLoop() {
