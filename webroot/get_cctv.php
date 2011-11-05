@@ -17,9 +17,10 @@ $kml = Utils::getKml();
 
 $ok = array();
 foreach($kml as $v) {
-	if(abs($v->lat-$pos->lat) > $radius)
-		continue;
-	if(abs($v->lng-$pos->lng) > $radius)
+	$x = abs($v->lat - $pos->lat);
+	$y *= .7; // Try to get a circle, the original longitude gives an oval.
+
+	if(($x > $radius) OR ($y > $radius) OR (sqrt($x*$x + $y*$y) > $radius))
 		continue;
 
 	$ok[] = $v;
