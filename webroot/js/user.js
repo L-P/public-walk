@@ -55,6 +55,8 @@ HD.UserView = Backbone.View.extend({
 		// No coords, no display
 		if (!LatLng) return;
 
+		App.map.getGMap().setCenter(LatLng);
+
 		// Set a marker the first time
 		if (!this.marker) {
 			this.marker = new google.maps.Marker({
