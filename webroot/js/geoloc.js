@@ -1,6 +1,5 @@
 HD.geo = (function() {
-	function initGeoloc(map) {
-		// Try HTML5 geolocation
+	function initGeoloc(map) { // Try HTML5 geolocation
 		if(navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function(position) {
 				var pos = new google.maps.LatLng(position.coords.latitude,
@@ -24,8 +23,7 @@ HD.geo = (function() {
 			}, function() {
 				handleNoGeoLocation(true, map);
 			});
-		} else {
-			// Browser doesn't support Geolocation
+		} else { // Browser doesn't support Geolocation
 			handleNoGeolocation(false, map);
 		}
 	}

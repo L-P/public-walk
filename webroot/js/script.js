@@ -34,6 +34,11 @@ $(function main() {
 
 		HD.geo.initGeoloc(mainMap);
 		mainMap.setZoom(16);
+		var userMarker = new google.maps.Marker({
+			position:mainMap.getCenter(),
+			map: mainMap,
+			title:"Your position"
+		});
 
 		// Get the cameras around us, and display them on the map
 		$.ajax({
