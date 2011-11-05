@@ -1,28 +1,21 @@
 HD.geo = (function() {
-	function initGeoloc(map) { // Try HTML5 geolocation
-		if(navigator.geolocation) {
+	function initGeoloc(map) {
+		if(navigator.geolocation) { // Try HTML5 geolocation
 			navigator.geolocation.getCurrentPosition(function(position) {
-				var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-				map.setCenter(pos);
-				HD.pos = pos;
+				window.HD.pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 			}, function() {
 				handleNoGeolocation(true, map);
 			});
 		} else if (google.gears) { // Try Google Gears Geolocation
 			var geo = google.gears.factory.create('beta.geolocation');
 			geo.getCurrentPosition(function(position) {
-				var pos = new google.maps.LatLng(position.latitude,position.longitude);
-				map.setCenter(pos);
-				HD.pos = pos;
+				window.HD.pos = new google.maps.LatLng(position.latitude,position.longitude);
 			}, function() {
 				handleNoGeoLocation(true, map);
 			});
 		} else { // Browser doesn't support Geolocation
 			handleNoGeolocation(false, map);
 		}
-
-		if(!HD.pos)
-			HD.pos = map.getCenter();
 	}
 
 
