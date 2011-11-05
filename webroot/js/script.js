@@ -2,7 +2,8 @@
 window.HD = {}
 // easiest log
 window.log = (function() {
-	return console.log || function() { }
+	if (window.console && window.console.log) return window.console.log;
+	return function() {}
 })()
 
 // Now, we will call the main script, to be loaded once the page is fully loaded
