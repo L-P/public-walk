@@ -20,9 +20,6 @@ HD.geo = (function() {
 		} else { // Browser doesn't support Geolocation
 			handleNoGeolocation(false, map);
 		}
-
-		if(!window.HD.pos)
-			window.HD.pos = map.getCenter();
 	}
 
 
