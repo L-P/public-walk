@@ -79,7 +79,7 @@ $(function main() {
 			data : {
 				lat: userPos.lat,
 				lng: userPos.lng,
-				radius: 0.001
+				radius: 0.005
 			},
 			success: function(data) {
 				// Add each cam on the map
