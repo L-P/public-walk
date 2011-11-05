@@ -38,10 +38,11 @@ HD.Map = Backbone.Model.extend({
 		var cameras = this.get('cameras');
 		_.each(data, function eachCamera(data) {
 			// Already saved
-			if (data.name in cameras) return;
+			if (data.id in cameras) return;
 			// Adding the camera
-			cameras[data.name] = new HD.Camera(data);
+			cameras[data.id] = new HD.Camera(data);
 		}, this);
+		log("Camera list added : "+_.size(cameras)+" elements");
 	},
 
 	// Return the GMap map

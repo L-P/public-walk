@@ -33,7 +33,7 @@ HD.CameraView = Backbone.View.extend({
 			title: this.model.get('name')
 		});
 		// Removing the default icon
-		marker.seticon("data:image/png;base64,");
+		this.marker.setIcon("data:image/png;base64,");
 		// And add the radius
 		this.displayRadius();
 	},
@@ -49,45 +49,3 @@ HD.CameraView = Backbone.View.extend({
 	}
 
 })
-
-
-function cameraConstructor(options) {
-	options = options || {}
-	// Default values
-	var defaults = {
-		lat: null,
-		lng: null,
-		name : "Big Brother",
-		id:null,
-		spyingRadius : 50,
-		radiusColor: '#AA0000'
-	}
-	_.defaults(options, defaults);
-
-	// Need a lat and lng
-	if (!options.lat || !options.lng) return console.error('You need to specify the lat/lng of the camera');
-
-	// Create the camera, and place it on the map
-	var marker = new google.maps.Marker({
-			position: new google.maps.LatLng(options.lat, options.lng),
-			map: window.map, 
-			title:options.name
-	});
-	console.log(marker)
-	console.log('apres');
-	
-	return
-	// We also add a radius around it
-	new google.maps.Circle({
-			map: window.map,
-			radius: options.spyingRadius,
-			fillColor: options.radiusColor
-	}).bindTo('center', marker, 'position');
-
-
-	return {
-		lat: options.lat,
-		lng: options.lng,
-		name: options.name
-	}
-}

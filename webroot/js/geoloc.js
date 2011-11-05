@@ -1,43 +1,43 @@
-HD.geo = (function() {
-	function initGeoloc(map) {
-		if(navigator.geolocation) { // Try HTML5 geolocation
-			navigator.geolocation.getCurrentPosition(function(position) {
-				window.HD.pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-			}, function() {
-				handleNoGeolocation(true, map);
+/**
+ * This model will only have one instance, and will be used to retrieve the Geoloc coords of the user
+ **/
+HD.Geoloc = Backbone.Model.extend({
+	defaults: {
+		enable:false
+	},
+	initialize: function initialize(options) {
+		// Init geoloc based on what is available
+		if (navigator.geolocation) this.initHTML5();
+		else if (google.gears) this.initGoogleGears();
+		else this.handleNoGeolocation();
+					
+	},
+
+	// Start HTML5 geoloc
+	initHTML5: function initHTML5() {
+		navigator.geolocation.getCurrentPosition(function geolocHTMLOk(position) {
+			log("HTML5 Geoloc ok");
+			App.trigger('geolocReceived', {
+				lat: position.coords.latitude,
+				lng: position.coords.longitude
 			});
-		} else if (google.gears) { // Try Google Gears Geolocation
-			var geo = google.gears.factory.create('beta.geolocation');
-			geo.getCurrentPosition(function(position) {
-				window.HD.pos = new google.maps.LatLng(position.latitude,position.longitude);
-			}, function() {
-				handleNoGeoLocation(true, map);
-			});
-		} else { // Browser doesn't support Geolocation
-			handleNoGeolocation(false, map);
-		}
+		}, this.handleNoGeolocation)
+	},
+
+	// Start Google gears geoloc
+	initGoogleGears: function initGoogleGears() {
+		var geo = google.gears.factory.create('beta.geolocation');
+		geo.getCurrentPosition(function geolocGoogleGearsOk(position) {
+			log("Google Gears Geoloc ok");
+			App.trigger('geolocReceived', {
+				lat: position.latitude,
+				lng: position.longitude
+			})
+		}, this.handleNoGeolocation)
+	},
+
+	// Called when Geoloc is not possib
+	handleNoGeolocation: function handleNoGeolocation() {
+		alert('No Geolocation');
 	}
-
-
-	function handleNoGeolocation(errorFlag, map) {
-		var content = '';
-		if (errorFlag) {
-			content = 'Error: The Geolocation service failed.';
-		} else {
-			content = 'Error: Your browser doesn\'t support geolocation.';
-		}
-
-		var options = {
-			map: map,
-			position: map.getCenter(),
-			content: content
-		};
-
-		var infowindow = new google.maps.InfoWindow(options);
-	}
-
-	return {
-		'initGeoloc': initGeoloc
-	};
-})();
-
+});

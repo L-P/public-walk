@@ -16,6 +16,7 @@ $(function main() {
 
 		// Display cameras on the map
 		map.displayCamerasAroundUser(user);
+});
 
 
 /*
