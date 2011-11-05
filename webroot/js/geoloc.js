@@ -18,6 +18,8 @@ HD.geo = (function() {
 		} else { // Browser doesn't support Geolocation
 			handleNoGeolocation(false, map);
 		}
+
+		return pos;
 	}
 
 
@@ -31,7 +33,7 @@ HD.geo = (function() {
 
 		var options = {
 			map: map,
-			position: pos,
+			position: map.getCenter(),
 			content: content
 		};
 
