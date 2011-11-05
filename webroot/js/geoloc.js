@@ -10,7 +10,6 @@ HD.Geoloc = Backbone.Model.extend({
 		if (navigator.geolocation) this.initHTML5();
 		else if (google.gears) this.initGoogleGears();
 		else this.handleNoGeolocation();
-					
 	},
 
 	// Start HTML5 geoloc
@@ -19,6 +18,13 @@ HD.Geoloc = Backbone.Model.extend({
 			App.trigger('geolocReceived', {
 				lat: position.coords.latitude,
 				lng: position.coords.longitude
+			});
+			navigator.geolocation.watchPosition(function watchPosition(position) {
+				log('Watch');
+				App.trigger('geolocReceived', {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude
+				});
 			});
 		}, this.handleNoGeolocation)
 	},
@@ -34,8 +40,16 @@ HD.Geoloc = Backbone.Model.extend({
 		}, this.handleNoGeolocation)
 	},
 
-	// Called when Geoloc is not possib
+	// Called when Geoloc is not possible
 	handleNoGeolocation: function handleNoGeolocation() {
 		alert('No Geolocation');
+
+		setInterval(function() {
+			App.trigger('geolocReceived', {
+				lat: 48.85,
+				lng: 2.34,
+			});
+		}, 2000);
 	}
 });
+
