@@ -19,8 +19,8 @@ $(function main() {
 				position:new google.maps.LatLng(lat, lng),
 				map: mainMap, 
 				title:name,
-				setIcon:"img/eye.png"
 			}); 
+			marker.setIcon("img/eye.png");
 			var circle = new google.maps.Circle({
 				map: mainMap,
 				radius: 50,
