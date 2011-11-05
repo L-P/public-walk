@@ -4,7 +4,7 @@ require_once 'base.inc.php';
 
 $lat	= Utils::getGet('lat');
 $lng	= Utils::getGet('lng');
-$radius	= Utils::getGet('radius', 0.1);
+$radius	= Utils::getGet('radius', 0.01);
 
 if(empty($lat) OR empty($lng))
 	throw new \Exception("Missing parameter lat or lng.");
