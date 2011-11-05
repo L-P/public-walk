@@ -32,7 +32,8 @@ $(function main() {
 			return marker;
 		}
 
-		HD.geo.initGeoloc();
+		HD.geo.initGeoloc(mainMap);
+		mainMap.setZoom(16);
 
 		// Get the cameras around us, and display them on the map
 		$.ajax({

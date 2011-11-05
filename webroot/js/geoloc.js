@@ -1,5 +1,5 @@
 HD.geo = (function() {
-	function initGeoloc() {
+	function initGeoloc(map) {
 		// Try HTML5 geolocation
 		if(navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function(position) {
@@ -7,36 +7,36 @@ HD.geo = (function() {
 					position.coords.longitude);
 
 				var infowindow = new google.maps.InfoWindow({
-					map: mainMap,
+					map: map,
 					position: pos,
 					content: 'Location found using HTML5.'
 				});
 
-				mainMap.setCenter(pos);
+				map.setCenter(pos);
 			}, function() {
-				handleNoGeolocation(true);
+				handleNoGeolocation(true, map);
 			});
 		} else {
 			// Browser doesn't support Geolocation
-			handleNoGeolocation(false);
+			handleNoGeolocation(false, map);
 		}
 	}
 
 
-	function handleNoGeolocation(errorFlag) {
+	function handleNoGeolocation(errorFlag, map) {
 		if (errorFlag) {
 			var content = 'Error: The Geolocation service failed.';
 		} else {
 			var content = 'Error: Your browser doesn\'t support geolocation.';
 
 			var options = {
-				map: mainMap,
+				map: map,
 				position: userPos,
 				content: content
 			};
 
 			var infowindow = new google.maps.InfoWindow(options);
-			mainMap.setCenter(options.position);
+			map.setCenter(options.position);
 		}
 	}
 
