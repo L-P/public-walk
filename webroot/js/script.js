@@ -33,6 +33,7 @@ $(function main() {
 		}
 
 		HD.geo.initGeoloc(mainMap);
+		mainMap.setCenter(HD.pos);
 		mainMap.setZoom(16);
 		var userMarker = new google.maps.Marker({
 			position:window.HD.pos,
