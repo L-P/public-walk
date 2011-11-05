@@ -4,42 +4,48 @@ HD.geo = (function() {
 			navigator.geolocation.getCurrentPosition(function(position) {
 				var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 				map.setCenter(pos);
+				HD.pos = pos;
 			}, function() {
 				handleNoGeolocation(true, map);
 			});
 		} else if (google.gears) { // Try Google Gears Geolocation
 			var geo = google.gears.factory.create('beta.geolocation');
 			geo.getCurrentPosition(function(position) {
-				initialLocation = new google.maps.LatLng(position.latitude,position.longitude);
-				map.setCenter(initialLocation);
+				var pos = new google.maps.LatLng(position.latitude,position.longitude);
+				map.setCenter(pos);
+				HD.pos = pos;
 			}, function() {
 				handleNoGeoLocation(true, map);
 			});
 		} else { // Browser doesn't support Geolocation
 			handleNoGeolocation(false, map);
 		}
+
+		if(!HD.pos)
+			HD.pos = map.getCenter();
 	}
 
 
 	function handleNoGeolocation(errorFlag, map) {
+		var content = '';
 		if (errorFlag) {
-			var content = 'Error: The Geolocation service failed.';
+			content = 'Error: The Geolocation service failed.';
 		} else {
-			var content = 'Error: Your browser doesn\'t support geolocation.';
-
-			var options = {
-				map: map,
-				position: userPos,
-				content: content
-			};
-
-			var infowindow = new google.maps.InfoWindow(options);
-			map.setCenter(options.position);
+			content = 'Error: Your browser doesn\'t support geolocation.';
 		}
+
+		var options = {
+			map: map,
+			position: map.getCenter(),
+			content: content
+		};
+
+		var infowindow = new google.maps.InfoWindow(options);
 	}
 
 	return {
-		'initGeoloc': initGeoloc
+		'initGeoloc': initGeoloc,
+		'pos':null
 	};
 })();
 
