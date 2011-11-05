@@ -88,7 +88,6 @@ HD.timeline = (function() {
 		'getPublicTime' :		getPublicTime(),
 		'getPublicDistance' :	getPublicDistance(),
 	});
-	clearStack();
 
 	return {
 		'pushStack' :			pushStack,
