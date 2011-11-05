@@ -22,7 +22,7 @@ $(function main() {
 				map: mainMap, 
 				title:name,
 			}); 
-			marker.setIcon("img/blank.png");
+			marker.setIcon("data:image/png;base64,");
 			var circle = new google.maps.Circle({
 				map: mainMap,
 				radius: 50,
