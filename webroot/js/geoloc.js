@@ -22,20 +22,20 @@ HD.geo = (function() {
 
 
 	function handleNoGeolocation(errorFlag, map) {
+		var content = '';
 		if (errorFlag) {
-			var content = 'Error: The Geolocation service failed.';
+			content = 'Error: The Geolocation service failed.';
 		} else {
-			var content = 'Error: Your browser doesn\'t support geolocation.';
-
-			var options = {
-				map: map,
-				position: map.getCenter(),
-				content: content
-			};
-
-			var infowindow = new google.maps.InfoWindow(options);
-			map.setCenter(options.position);
+			content = 'Error: Your browser doesn\'t support geolocation.';
 		}
+
+		var options = {
+			map: map,
+			position: map.getCenter(),
+			content: content
+		};
+
+		var infowindow = new google.maps.InfoWindow(options);
 	}
 
 	return {
