@@ -27,6 +27,9 @@ HD.User = Backbone.Model.extend({
 		this.set({lat:lat,lng:lng});
 		// Ugly, but works
 		this.view.render();
+
+		// We also display the cameras around the user
+		App.map.displayCamerasAroundUser(this);
 	},
 
 	// Return the LatLng object of the user
