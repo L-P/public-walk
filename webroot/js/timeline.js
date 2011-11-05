@@ -67,7 +67,6 @@ HD.Timeline = Backbone.Model.extend({
 			min = Math.min(min, v.time);
 		});
 
-		log(max-min);
 		return (max - min) / 1000;
 	},
 	
