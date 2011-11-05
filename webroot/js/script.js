@@ -76,7 +76,11 @@ $(function main() {
 		// Get the cameras around us, and display them on the map
 		$.ajax({
 			url : 'get_cctv.php',
-			data : userPos,
+			data : {
+				lat: userPos.lat,
+				lng: userPos.lng,
+				radius: 0.001
+			},
 			success: function(data) {
 				// Add each cam on the map
 				_.each(data, function eachCamera(camera) {
