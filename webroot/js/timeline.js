@@ -1,45 +1,48 @@
-HD.timeline = (function() {
-	var stack = {};
-
-	function pushStack(time, dist, id) {
-		stack[time] = {
+HD.Timeline = Backbone.Model.extend({
+	defaults: {
+	},
+	initialize: function initialize(options) {
+		this.stack = [];
+		this.createDummyStack();
+	},
+	
+	pushStack : function pushStack(time, dist, id) {
+		this.stack[time] = {
 			time: time,
 			dist: dist,
 			id: id
 		};
-	}
+	},
 
+	clearStack: function clearStack() {
+		this.stack = [];
+	},
 
-	function clearStack() {
-		stack = [];
-	}
-
-	function createDummyStack() {
+	createDummyStack: function createDummyStack() {
 		for(i=0; i<500; i++) {
-			pushStack(i, Math.random()*10, (Math.random() > .8) ? Math.floor(Math.random()*100) : null);
+			this.pushStack(i, Math.random()*10, (Math.random() > .8) ? Math.floor(Math.random()*100) : null);
 		}
-	}
+	},
 
-	function getTime() {
+	getTime: function getTime() {
 		var max = 0;
-		_.each(stack, function(v, k) {
+		_.each(this.stack, function(v, k) {
 			max = Math.max(max, v.time);
 		});
 
 		return max;
-	}
-
-
-	function getDistance() {
-		return _.reduce(stack, function(memo, v) {
+	},
+	
+	getDistance : function getDistance() {
+		return _.reduce(this.stack, function(memo, v) {
 			return memo + v.dist;
 		}, 0);
-	}
+	},
 
 
-	function getCamCount() {
+	getCamCount: function getCamCount() {
 		var seen = {};
-		_.each(stack, function(v, k) {
+		_.each(this.stack, function(v, k) {
 			if(v.id)
 				seen[v.id] = true;
 		});
@@ -47,58 +50,32 @@ HD.timeline = (function() {
 		return _.reduce(seen, function(memo, v) {
 			return memo+1;
 		}, 0);
-	}
+	},
 
-	function getPrivateTime() {
+	getPrivateTime: function getPrivateTime() {
 		var time = 0;
-		var lastTime = stack[0].time;
-		_.each(stack, function(v, k) {
+		var lastTime = this.stack[0].time;
+		_.each(this.stack, function(v, k) {
 			if(!v.id)
 				time += v.time - lastTime;
 			lastTime = v.time;
 		});
 
 		return time;
-	}
+	},
 
-	function getPrivateDistance() {
-		return _.reduce(stack, function(memo, v) {
+	getPrivateDistance: function getPrivateDistance() {
+		return _.reduce(this.stack, function(memo, v) {
 			return memo + (v.id ? 0 : v.dist);
 		}, 0);
+	},
+
+	getPublicTime: function getPublicTime() {
+		return this.getTime() - this.getPrivateTime();
+	},
+
+	getPublicDistance: function getPublicDistance() {
+		return this.getDistance() - this.getPrivateDistance();
 	}
 
-	function getPublicTime() {
-		return getTime() - getPrivateTime();
-	}
-
-	function getPublicDistance() {
-		return getDistance() - getPrivateDistance();
-		return NaN;
-	}
-
-
-
-	createDummyStack();
-	console.log({
-		'getTime' :				getTime(),
-		'getDistance' :			getDistance(),
-		'getCamCount' :			getCamCount(),
-		'getPrivateTime' :		getPrivateTime(),
-		'getPrivateDistance' :	getPrivateDistance(),
-		'getPublicTime' :		getPublicTime(),
-		'getPublicDistance' :	getPublicDistance(),
-	});
-	clearStack();
-
-	return {
-		'pushStack' :			pushStack,
-		'getTime' :				getTime,
-		'getDistance' :			getDistance,
-		'getCamCount' :			getCamCount,
-		'getPrivateTime' :		getPrivateTime,
-		'getPrivateDistance' :	getPrivateDistance,
-		'getPublicTime' :		getPublicTime,
-		'getPublicDistance' :	getPublicDistance,
-	};
-})();
-
+});
