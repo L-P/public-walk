@@ -35,7 +35,7 @@ HD.User = Backbone.Model.extend({
 		});
 		delete this.LatLng;
 		this.set({lat:lat,lng:lng});
-		this.set({distance: getDistanceInMetersFromCoordinates(
+		this.set({distance: this.get('distance') + getDistanceInMetersFromCoordinates(
 			this.get('lat'),
 			this.get('lng'),
 			this.get('lastLat'),

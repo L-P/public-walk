@@ -37,6 +37,7 @@ HD.Timeline = Backbone.Model.extend({
 
 		var time = new Date().getTime();
 		var diff = time - this.lastTime;
+		var walkedDistance = App.user.get('distance');
 		this.totalTime += diff;
 		this.lastTime = time;
 
@@ -48,17 +49,17 @@ HD.Timeline = Backbone.Model.extend({
 			if(distance && (distance <= 50)) {
 				this.cameras.push(v.id);
 				this.publicTime += diff;
-				this.publicDistance += App.user.get('distance');
+				this.publicDistance += walkedDistance;
 				atLeastOneCam = true;
 			}
 		}, this);
 
 		if(!atLeastOneCam) {
 			this.privateTime += diff;
-			this.privateDistance += App.user.get('distance');
+			this.privateDistance += walkedDistance;
 		}
 
-		App.user.set({distance: 0});
+		App.user.set({distance: App.user.get('distance') - walkedDistance});
 	},
 
 
