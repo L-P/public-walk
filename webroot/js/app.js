@@ -13,6 +13,9 @@ HD.App = Backbone.Model.extend({
 		// We set a view to display the whole app
 		this.view = new HD.AppView({model:this})
 
+		// We simulate a journey when we got a direction list
+		this.bind('directionsReceived', this.directionsReceived, this);
+
 	},
 
 	// This method starts the whole map display logic
@@ -25,6 +28,22 @@ HD.App = Backbone.Model.extend({
 		});
 		// Creating the timeline
 		App.timeline = new HD.Timeline();
+	},
+
+	// Triggered when the directions path is calculated
+	directionsReceived: function directionReceived(directions) {
+		// We start the map
+		this.startMap();
+		// We simulate a user moving on the map
+		this.set({ 'geoloc' : true });
+
+		this.directions = directions;
+		setInterval(function() {
+			log("Step");
+			var path = App.directions.shift();
+			log(path);
+			App.trigger('geolocReceived', path)
+		}, 2000);
 	}
 })
 

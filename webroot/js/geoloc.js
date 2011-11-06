@@ -8,13 +8,6 @@ HD.Geoloc = Backbone.Model.extend({
 		// Init geoloc based on what is available
 		if (navigator.geolocation) this.initHTML5();
 		else this.handleNoGeolocation();
-
-		setInterval(function() {
-			App.trigger('updateStack', {
-				lat: App.user.get('lat'),
-				lng: App.user.get('lng'),
-			});
-		}, 5000);
 	},
 
 	// Start HTML5 geoloc

@@ -6,13 +6,13 @@ function getRouteCoordinates(from, to) {
     destination:to,
     origin:from,
     travelMode:google.maps.DirectionsTravelMode.WALKING};
-    var yeeeaaaah = [];
+    var out = [];
     directionsService.route(directionsRequest, function(result, status) {
         _.each(result.routes[0].legs[0].steps, function(step) {
             _.each(step.path, function(path) {
-                yeeeaaaah.push(path);
+                out.push(path);
             });
         });
     });
-    return yeeeaaah;
+    return out;
 }

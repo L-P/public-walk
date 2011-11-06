@@ -3,7 +3,7 @@
  **/
 HD.Map = Backbone.Model.extend({
 	defaults: {
-		zoom: 14,
+		zoom: 18,
 		center: null,	// A GMaps LatLng object
 		cameras: {}		// The list of cameras added to the map
 	},
