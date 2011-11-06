@@ -3,7 +3,8 @@ HD.Timeline = Backbone.Model.extend({
 	},
 	initialize: function initialize(options) {
 		this.reset();
-		App.bind('updateStack', this.update, this);
+		// Update the counters ever 5s
+		setInterval(_.bind(this.update, this), 5000);
 	},
 
 
