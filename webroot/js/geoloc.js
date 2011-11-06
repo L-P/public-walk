@@ -16,7 +16,10 @@ HD.Geoloc = Backbone.Model.extend({
 		navigator.geolocation.watchPosition(function(position) {
 				log("Position watched");
 				// Mark geoloc as enabled if it wasn't the case
-				if (App.get('geoloc')==false) App.set({geoloc:true});
+				if (App.get('geoloc')==false) {
+					App.set({geoloc:true});
+					App.startMap();
+				}
 				App.trigger('geolocReceived', {
 					lat: position.coords.latitude,
 					lng: position.coords.longitude
