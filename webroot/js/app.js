@@ -28,6 +28,7 @@ HD.App = Backbone.Model.extend({
 		});
 		// Creating the timeline
 		App.timeline = new HD.Timeline();
+		infoFetchingLoop();
 	},
 
 	// Triggered when the directions path is calculated
