@@ -10,14 +10,29 @@ function secondsToTime(secs)
 
 
 function displayInfoInPanel() {
+	function distToString(dist) {
+		if(!dist)
+			return "0m";
+
+		if(dist >= 1000)
+			return Math.round(dist/100, 1)/10 + "km";
+		else
+			return Math.round(dist) + "m";
+	}
+
 	var count = App.timeline.getCamCount();
+
     $('#totalTime').text(secondsToTime(App.timeline.getTime()));
-    $('#totalDistance').text(Math.floor(App.timeline.getDistance())+"m");
+    $('#totalDistance').text(distToString(App.timeline.getDistance()));
     $('#privateTime').text(secondsToTime(App.timeline.getPrivateTime()));
-    $('#privateDistance').text(Math.floor(App.timeline.getPrivateDistance())+"m");
+    $('#privateDistance').text(distToString(App.timeline.getPrivateDistance()));
     $('#publicTime').text(secondsToTime(App.timeline.getPublicTime()));
-    $('#publicDistance').text(Math.floor(App.timeline.getPublicDistance())+"m");
-    $('#seen').text("Seen by "+count+" camera"+((count != 1)?"s":"")+".");
+    $('#publicDistance').text(distToString(App.timeline.getPublicDistance()));
+
+	if(count)
+		$('#seen').text("Seen by "+count+" camera"+((count != 1)?"s":"")+".");
+	else
+		$('#seen').text("Unseen yet.");
 }
 
 function infoFetchingLoop() {
