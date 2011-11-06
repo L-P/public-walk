@@ -24,7 +24,7 @@ HD.Geoloc = Backbone.Model.extend({
 					lat: position.coords.latitude,
 					lng: position.coords.longitude
 				});
-			}, this.handleNoGeolocation);
+			}, this.handleNoGeolocation, {enableHighAccuracy: true});
 	},
 
 	// Called when Geoloc is not possible
