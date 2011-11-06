@@ -39,9 +39,9 @@ HD.App = Backbone.Model.extend({
 		this.set({ 'geoloc' : true });
 
 		this.directions = directions;
-		setInterval(function() {
-			log("Step");
+		this.directionInterval = setInterval(function() {
 			var path = App.directions.shift();
+			if (!path) return clearInterval(App.directionInterval);
 			log(path);
 			App.trigger('geolocReceived', path)
 		}, 2000);
