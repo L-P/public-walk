@@ -17,13 +17,14 @@ function initAllTheThings () {
 }
 
 function displayInfoInPanel() {
+	var count = App.timeline.getCamCount();
     $('#totalTime').text(secondsToTime(App.timeline.getTime()));
     $('#totalDistance').text(Math.floor(App.timeline.getDistance())+"m");
     $('#privateTime').text(secondsToTime(App.timeline.getPrivateTime()));
     $('#privateDistance').text(Math.floor(App.timeline.getPrivateDistance())+"m");
     $('#publicTime').text(secondsToTime(App.timeline.getPublicTime()));
     $('#publicDistance').text(Math.floor(App.timeline.getPublicDistance())+"m");
-    $('#cameraCount').text(App.timeline.getCamCount());
+    $('#seen').text("Seen by "+count+" camera"+((count != 1)?"s":"")+".");
 }
 
 function infoFetchingLoop() {
