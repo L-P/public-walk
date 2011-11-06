@@ -3,7 +3,7 @@ HD.Timeline = Backbone.Model.extend({
 	},
 	initialize: function initialize(options) {
 		this.reset();
-		App.bind('updateStack', this.update, this);
+		setInterval(_.bind(this.update, this), 2000);
 	},
 
 
@@ -19,17 +19,19 @@ HD.Timeline = Backbone.Model.extend({
 		this.privateDistance	= 0;	// done on purpose
 	},
 
-	update: function update(data) {
+	update: function update() {
 		function getDistance(cam) {
 			var radius = 0.001;
 			var pos = cam.getLatLng();
-			var x = Math.abs(pos.lat() - data.lat);
-			var y = Math.abs(pos.lng() - data.lng);
+			var upos = App.user.getLatLng();
+
+			var x = Math.abs(pos.lat() - upos.lat());
+			var y = Math.abs(pos.lng() - upos.lng());
 
 			if(x >= radius || y >= radius)
 				return null;
 
-			return getDistanceInMetersFromCoordinates(pos.lat(), pos.lng(), data.lat, data.lng);
+			return getDistanceInMetersFromCoordinates(pos.lat(), pos.lng(), upos.lat(), upos.lng());
 		}
 
 

@@ -22,7 +22,7 @@ HD.User = Backbone.Model.extend({
 	
 	// Fired when we got coords from geoloc
 	geolocReceived: function geolocReceived(data) {
-		log("Geoloc data received :", data);
+		// log("Geoloc data received :", data);
 		this.moveTo(data.lat, data.lng);
 	},
 
