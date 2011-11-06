@@ -4,15 +4,15 @@
  **/
 HD.User = Backbone.Model.extend({
 	defaults: {
-		lat: 48.85,
-		lng: 2.34,
-		isCoordsChanged: false,
+		lat: null,
+		lng: null,
 		perceptionRadius: 0.005,
-		lastLat: 48.85,
-		lastLng: 2.34,
+		lastLat: null,
+		lastLng: null,
 		distance: 0
 	},
 	initialize: function initialize() {
+		log("new user");
 		// Asign a view, so it gets displayed when updated
 		this.view = new HD.UserView({model:this});
 
@@ -22,26 +22,33 @@ HD.User = Backbone.Model.extend({
 	
 	// Fired when we got coords from geoloc
 	geolocReceived: function geolocReceived(data) {
-		log("Geoloc data received :", data);
 		this.moveTo(data.lat, data.lng);
 	},
 
 	// Move the user to a new point.
 	moveTo: function moveTo(lat, lng) {
-		// delete the old LatLng
-		this.set({
-			lastLat : this.get('lat'),
-			lastLng : this.get('lng')
-		});
+		// Special cases if we are placing the first point on map
+		var isFirstPlacement = !this.has('lat');
+
+		// First placement means last coords are same as current coords
+		if (isFirstPlacement) this.set({ lastLat: lat, lastLng: lng});
+		// else, we save the previous coords
+		else this.set({ lastLat: this.get('lat'), lastLng: this.get('lng')})
+
+		// delete the old LatLng object because coords are changing
 		delete this.LatLng;
+		// We update the coords
 		this.set({lat:lat,lng:lng});
+
+		// We get the distance from the last coords
 		this.set({distance: getDistanceInMetersFromCoordinates(
 			this.get('lat'),
 			this.get('lng'),
 			this.get('lastLat'),
 			this.get('lastLng')
 		)});
-		// Ugly, but works
+
+		// We force the rendering of the user on its new coords
 		this.view.render();
 
 		// We also display the cameras around the user
