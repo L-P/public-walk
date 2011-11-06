@@ -7,8 +7,6 @@ HD.User = Backbone.Model.extend({
 		lat: null,
 		lng: null,
 		perceptionRadius: 0.005,
-		lastLat: null,
-		lastLng: null,
 		distance: 0
 	},
 	initialize: function initialize() {
@@ -28,26 +26,10 @@ HD.User = Backbone.Model.extend({
 
 	// Move the user to a new point.
 	moveTo: function moveTo(lat, lng) {
-		// Special cases if we are placing the first point on map
-		var isFirstPlacement = !this.has('lat');
-
-		// First placement means last coords are same as current coords
-		if (isFirstPlacement) this.set({ lastLat: lat, lastLng: lng});
-		// else, we save the previous coords
-		else this.set({ lastLat: this.get('lat'), lastLng: this.get('lng')})
-
 		// delete the old LatLng object because coords are changing
 		delete this.LatLng;
 		// We update the coords
 		this.set({lat:lat,lng:lng});
-
-		// We get the distance from the last coords
-		this.set({distance: this.get('distance') + getDistanceInMetersFromCoordinates(
-			this.get('lat'),
-			this.get('lng'),
-			this.get('lastLat'),
-			this.get('lastLng')
-		)});
 
 		// We force the rendering of the user on its new coords
 		this.view.render();

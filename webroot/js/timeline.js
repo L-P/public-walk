@@ -5,6 +5,8 @@ HD.Timeline = Backbone.Model.extend({
 		this.reset();
 		// Update the counters ever 2s
 		setInterval(_.bind(this.update, this), 2000);
+		this.lastLat = null;
+		this.lastLng = null;
 	},
 
 
@@ -35,10 +37,24 @@ HD.Timeline = Backbone.Model.extend({
 			return getDistanceInMetersFromCoordinates(pos.lat(), pos.lng(), upos.lat(), upos.lng());
 		}
 
+		var userPos = App.user.getLatLng();
+
+		// No need to update if we don't have a position.
+		if(!userPos)
+			return;
+
+		// Initialization if empty.
+		if(!this.lastLat || !this.lastLng) {
+			this.lastLat = userPos.lat();
+			this.lastLng = userPos.lng();
+		}
 
 		var time = new Date().getTime();
 		var diff = time - this.lastTime;
-		var walkedDistance = App.user.get('distance');
+		var walkedDistance = getDistanceInMetersFromCoordinates(this.lastLat, this.lastLng, userPos.lat(), userPos.lng());
+		this.lastLat = userPos.lat();
+		this.lastLng = userPos.lng();
+
 		this.totalTime += diff;
 		this.lastTime = time;
 
@@ -59,8 +75,6 @@ HD.Timeline = Backbone.Model.extend({
 			this.privateTime += diff;
 			this.privateDistance += walkedDistance;
 		}
-
-		App.user.set({distance: App.user.get('distance') - walkedDistance});
 	},
 
 
@@ -83,7 +97,7 @@ HD.Timeline = Backbone.Model.extend({
 	},
 
 	getPrivateDistance: function getPrivateDistance() {
-		return this.privateDistance / 1000;
+		return this.privateDistance;
 	},
 
 	getPublicTime: function getPublicTime() {
@@ -91,7 +105,7 @@ HD.Timeline = Backbone.Model.extend({
 	},
 
 	getPublicDistance: function getPublicDistance() {
-	   return this.privateDistance;
+	   return this.publicDistance;
 	}
 
 });
