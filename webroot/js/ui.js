@@ -8,13 +8,6 @@ function secondsToTime(secs)
     return hours+"h "+minutes+"m "+seconds+"s";
 }
 
-function initAllTheThings () {
-    $('#startButton').hide();
-    $('#canvas').show();
-    $('#infoPanel').show();
-    main();
-    infoFetchingLoop();
-}
 
 function displayInfoInPanel() {
 	var count = App.timeline.getCamCount();

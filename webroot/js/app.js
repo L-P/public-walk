@@ -25,6 +25,7 @@ HD.App = Backbone.Model.extend({
 		});
 		// Creating the timeline
 		App.timeline = new HD.Timeline();
+		infoFetchingLoop();
 	}
 })
 
