@@ -22,6 +22,7 @@ HD.User = Backbone.Model.extend({
 	
 	// Fired when we got coords from geoloc
 	geolocReceived: function geolocReceived(data) {
+		log("Geoloc data received :", data);
 		this.moveTo(data.lat, data.lng);
 	},
 
@@ -41,7 +42,7 @@ HD.User = Backbone.Model.extend({
 		this.set({lat:lat,lng:lng});
 
 		// We get the distance from the last coords
-		this.set({distance: getDistanceInMetersFromCoordinates(
+		this.set({distance: this.get('distance') + getDistanceInMetersFromCoordinates(
 			this.get('lat'),
 			this.get('lng'),
 			this.get('lastLat'),

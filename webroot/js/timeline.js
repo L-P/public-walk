@@ -3,8 +3,8 @@ HD.Timeline = Backbone.Model.extend({
 	},
 	initialize: function initialize(options) {
 		this.reset();
-		// Update the counters ever 5s
-		setInterval(_.bind(this.update, this), 5000);
+		// Update the counters ever 2s
+		setInterval(_.bind(this.update, this), 2000);
 	},
 
 
@@ -20,22 +20,25 @@ HD.Timeline = Backbone.Model.extend({
 		this.privateDistance	= 0;	// done on purpose
 	},
 
-	update: function update(data) {
+	update: function update() {
 		function getDistance(cam) {
 			var radius = 0.001;
 			var pos = cam.getLatLng();
-			var x = Math.abs(pos.lat() - data.lat);
-			var y = Math.abs(pos.lng() - data.lng);
+			var upos = App.user.getLatLng();
+
+			var x = Math.abs(pos.lat() - upos.lat());
+			var y = Math.abs(pos.lng() - upos.lng());
 
 			if(x >= radius || y >= radius)
 				return null;
 
-			return getDistanceInMetersFromCoordinates(pos.lat(), pos.lng(), data.lat, data.lng);
+			return getDistanceInMetersFromCoordinates(pos.lat(), pos.lng(), upos.lat(), upos.lng());
 		}
 
 
 		var time = new Date().getTime();
 		var diff = time - this.lastTime;
+		var walkedDistance = App.user.get('distance');
 		this.totalTime += diff;
 		this.lastTime = time;
 
@@ -47,17 +50,17 @@ HD.Timeline = Backbone.Model.extend({
 			if(distance && (distance <= 50)) {
 				this.cameras.push(v.id);
 				this.publicTime += diff;
-				this.publicDistance += App.user.get('distance');
+				this.publicDistance += walkedDistance;
 				atLeastOneCam = true;
 			}
 		}, this);
 
 		if(!atLeastOneCam) {
 			this.privateTime += diff;
-			this.privateDistance += App.user.get('distance');
+			this.privateDistance += walkedDistance;
 		}
 
-		App.user.set({distance: 0});
+		App.user.set({distance: App.user.get('distance') - walkedDistance});
 	},
 
 
