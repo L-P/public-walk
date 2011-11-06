@@ -68,7 +68,5 @@ HD.AppView = Backbone.View.extend({
 		// Nothing to do if geoloc disabled
 		if (!geoloc) return;
 		$(this.el).removeClass('initializing');
-		// Autostart system if geoloc enabled
-		this.model.startMap();
 	}
 })
