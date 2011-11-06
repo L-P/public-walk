@@ -19,12 +19,14 @@ HD.App = Backbone.Model.extend({
 	},
 
 	// This method starts the whole map display logic
-	startMap: function start() {
+	startMap: function start(center) {
+		if (!center) center = new google.maps.LatLng(48.85, 2.34);
+
 		// Creating the user
 		App.user = new HD.User();
 		// Creating the map
 		App.map = new HD.Map({
-			center: new google.maps.LatLng(48.85, 2.34)
+			center: center
 		});
 		// Creating the timeline
 		App.timeline = new HD.Timeline();
@@ -34,17 +36,21 @@ HD.App = Backbone.Model.extend({
 	// Triggered when the directions path is calculated
 	directionsReceived: function directionReceived(directions) {
 		// We start the map
-		this.startMap();
+		this.startMap(new google.maps.LatLng(directions[0].lat, directions[0].lng));
 		// We simulate a user moving on the map
 		this.set({ 'geoloc' : true });
 
-		this.directions = directions;
-		this.directionInterval = setInterval(function() {
-			var path = App.directions.shift();
-			if (!path) return clearInterval(App.directionInterval);
-			log(path);
-			App.trigger('geolocReceived', path)
-		}, 2000);
+		// We delay the movement simulation to keep some room for the map to load
+		_.delay(function() {
+			App.directions = directions;
+			App.directionInterval = setInterval(function() {
+				var path = App.directions.shift();
+				// Stop interval when at destination
+				if (!path) return clearInterval(App.directionInterval);
+				App.trigger('geolocReceived', path)
+			}, 2000);
+		}, 5000)
+
 	}
 })
 
