@@ -3,53 +3,31 @@
  **/
 HD.Geoloc = Backbone.Model.extend({
 	defaults: {
-		enable:false
 	},
 	initialize: function initialize(options) {
 		// Init geoloc based on what is available
 		if (navigator.geolocation) this.initHTML5();
-		else if (google.gears) this.initGoogleGears();
 		else this.handleNoGeolocation();
 	},
 
 	// Start HTML5 geoloc
 	initHTML5: function initHTML5() {
-		navigator.geolocation.getCurrentPosition(function geolocHTMLOk(position) {
-			App.trigger('geolocReceived', {
-				lat: position.coords.latitude,
-				lng: position.coords.longitude
-			});
-			navigator.geolocation.watchPosition(function watchPosition(position) {
-				log('Watch');
+		// Testing geolocation activated
+		navigator.geolocation.watchPosition(function(position) {
+				log("Position watched");
+				// Mark geoloc as enabled if it wasn't the case
+				if (App.get('geoloc')==false) App.set({geoloc:true});
 				App.trigger('geolocReceived', {
 					lat: position.coords.latitude,
 					lng: position.coords.longitude
 				});
-			});
-		}, this.handleNoGeolocation)
-	},
-
-	// Start Google gears geoloc
-	initGoogleGears: function initGoogleGears() {
-		var geo = google.gears.factory.create('beta.geolocation');
-		geo.getCurrentPosition(function geolocGoogleGearsOk(position) {
-			App.trigger('geolocReceived', {
-				lat: position.latitude,
-				lng: position.longitude
-			})
-		}, this.handleNoGeolocation)
+			}, this.handleNoGeolocation);
 	},
 
 	// Called when Geoloc is not possible
 	handleNoGeolocation: function handleNoGeolocation() {
-		alert('No Geolocation');
-
-		setInterval(function() {
-			App.trigger('geolocReceived', {
-				lat: 48.85,
-				lng: 2.34,
-			});
-		}, 2000);
+		log("No geoloc");
+		App.set({geoloc:false});
 	}
 });
 

@@ -4,20 +4,22 @@
  **/
 HD.User = Backbone.Model.extend({
 	defaults: {
-		lat: 48.85,
-		lng: 2.34,
-		isCoordsChanged: false,
+		lat: null,
+		lng: null,
 		perceptionRadius: 0.005
 	},
 	initialize: function initialize() {
-		// We init the geoloc service
-		App.geoloc = new HD.Geoloc();
-
 		// Asign a view, so it gets displayed when updated
 		this.view = new HD.UserView({model:this});
 
 		// We listen to the updated coords from geoloc
 		App.bind('geolocReceived', this.geolocReceived, this);
+	},
+	
+	// Fired when we got coords from geoloc
+	geolocReceived: function geolocReceived(data) {
+		log("Geoloc data received :", data);
+		this.moveTo(data.lat, data.lng);
 	},
 
 	// Move the user to a new point.
@@ -39,11 +41,6 @@ HD.User = Backbone.Model.extend({
 		return this.LatLng = new google.maps.LatLng(this.get('lat'), this.get('lng'))
 	},
 
-	// Fired when we got coords from geoloc
-	geolocReceived: function geolocReceived(data) {
-		log("Geoloc data received :", data);
-		this.moveTo(data.lat, data.lng);
-	}
 })
 
 HD.UserView = Backbone.View.extend({
@@ -53,11 +50,11 @@ HD.UserView = Backbone.View.extend({
 
 	// Fired whenever user coords changed
 	render: function render() {
-		log("Render user on map");
 		var LatLng = this.model.getLatLng();
 		// No coords, no display
 		if (!LatLng) return;
 
+		// Center map on the user
 		App.map.getGMap().setCenter(LatLng);
 
 		// Set a marker the first time
@@ -65,7 +62,7 @@ HD.UserView = Backbone.View.extend({
 			this.marker = new google.maps.Marker({
 				position: LatLng,
 				map: App.map.getGMap(),
-				title: this.model.get('name')
+				title: 'You'
 			});
 			return;
 		} else {
