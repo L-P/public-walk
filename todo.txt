@@ -1,0 +1,28 @@
+Ensuite, sur de grandes lignes droites, le joueur "saute" d'un point à
+un autre, comme j'avais pensé. Dans l'idéal il faudrait rajouter des
+paths dans la liste quand la distance entre deux points est trop grande,
+pour que le perso avance à un rythme constant.
+
+> Bon. Il est 3h15, j'ai presque plus de batterie.
+> J'ai ajouté la landing page avec choix de l'itinéraire, j'ai réutilisé
+> ton code pour les paths Jason, mais j'ai du le sortir de la fonction
+> pour un histoire de scope et d'asynchronicité à la con.
+Oklol.
+
+
+> Ca déplace bien le perso d'un point à un autre, par étape toutes
+> les 2s.  L'affichage des distances/durée a buggué par contre et il ne
+> fonctionne plus, il faudrait débugguer ça...
+Fait.
+
+> La carte se centre par défaut sur le centre de paris, puis sur le joueur
+> une fois qu'on a sa géoloc (soit 2s après le début). Il faudrait
+> tricher et centrer la carte sur la première position du joueur lors du
+> calcul d'itinéraire.
+Ça a l'air de marcher maintenant.
+
+
+> Pour finir, pour la démo, il faudrait trouver un trajet qui passe par
+> des zones avec et sans cameras de surveillance... Ici, à cause du canal,
+> les itinéraires sont un peu pourris.
+Fait. Ça passe par Bastille maintenant.
