@@ -1,0 +1,29 @@
+The project we build is about the ever growing number of security surveillance
+cameras located in the city of Paris.  There are more than one thousands two
+hundred of them.
+
+We think it raises concern about privacy and the limit between public and
+private life.
+
+A few months ago, the online magazine owni.fr released a `.kml` file of all the
+coords of the cameras.
+
+Using Google maps API and this file, we built a web app that can simulate the
+casual walking of any citizen from one point to another.  It will display each
+camera on the map, as well as an approximate radius of the area it covers.  The
+user position marker will be updated over time to simulate it following its
+path.
+
+We then keep track of the total distance and time of your travel, and split it
+into public time and private time. The stats are updated on each step at the
+bottom of the screen.
+
+You can see that a casual walk here between home and work goes through very
+dense camera areas.
+
+We hope the app can allow anyone to easily understand in a fun way what more
+than one thousand cams in Paris means, and how it affects their everyday walks.
+
+A few words on technology : this is simple html5, js, css, geolocation and
+a .kml file.  It also works on smartphone and geolocation-enabled devices, in
+that case instead of simulating a path, it simply follow the user in real time.
